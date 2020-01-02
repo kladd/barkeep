@@ -144,7 +144,7 @@ fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .service(web::resource("/v1").route(web::post().to(index)))
-            .service(Files::new("", "./dist").index_file("index.html"))
+            .service(Files::new("", "./public").index_file("index.html"))
             .register_data(data.clone())
             .default_service(web::route().to(|| HttpResponse::NotFound()))
     })
