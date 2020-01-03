@@ -1,4 +1,3 @@
-
 extern crate actix_files;
 extern crate actix_web;
 extern crate serde;
@@ -62,12 +61,45 @@ fn build_ingredients() -> HashMap<String, Ingredient> {
         };
     }
 
-    ingredient!("gin", "Gin");
-    ingredient!("dryVermouth", "Dry Vermouth");
-    ingredient!("maraschinoLiquer", "Maraschino Liquer");
-    ingredient!("lemonJuice", "Lemon Juice");
-    ingredient!("bourbon", "Bourbon");
+    ingredient!("absinthe", "Absinthe");
     ingredient!("angosturaBitters", "Angostura Bitters");
+    ingredient!("apricotBrandy", "Apricot Brandy");
+    ingredient!("bourbon", "Bourbon");
+    ingredient!("brandy", "Brandy");
+    ingredient!("calvados", "Calvados");
+    ingredient!("campari", "Campari");
+    ingredient!("cognac", "Cognac");
+    ingredient!("cream", "Cream");
+    ingredient!("cremeDeCacao", "Crème de Cacao");
+    ingredient!("cremeDeMenthe", "Crème de Menthe");
+    ingredient!("drambuie", "Drambuie");
+    ingredient!("dryVermouth", "Dry Vermouth");
+    ingredient!("eggWhite", "Egg White");
+    ingredient!("eggYolk", "Egg Yolk");
+    ingredient!("gin", "Gin");
+    ingredient!("gommeSyrup", "Gomme Syrup");
+    ingredient!("grenadine", "Grenadine");
+    ingredient!("lemonJuice", "Lemon Juice");
+    ingredient!("limeJuice", "Lime Juice");
+    ingredient!("maraschino", "Maraschino Liqueur");
+    ingredient!("mintLeaves", "Mint Leaves");
+    ingredient!("orangeBitters", "Orange Bitters");
+    ingredient!("orangeFlowerWater", "Orange Flower Water");
+    ingredient!("orangeJuice", "Orange Juice");
+    ingredient!("peachBitters", "Peach Bitters");
+    ingredient!("peychaudsBitters", "Peychaud's Bitters");
+    ingredient!("pineappleJuice", "Pineapple Juice");
+    ingredient!("port", "Port");
+    ingredient!("raspberrySyrup", "Raspberry Syrup");
+    ingredient!("rye", "Rye");
+    ingredient!("simpleSyrup", "Simple Syrup");
+    ingredient!("sodaWater", "Soda Water");
+    ingredient!("sugarCube", "Sugar Cube");
+    ingredient!("sweetVermouth", "Sweet Vermouth");
+    ingredient!("tripleSec", "Triple Sec");
+    ingredient!("vanillaExtract", "Vanilla Extract");
+    ingredient!("vodka", "Vodka");
+    ingredient!("whiteRum", "White Rum");
 
     ingredients
 }
@@ -85,18 +117,173 @@ fn build_drinks() -> Drinks {
         };
     }
 
-    drink!("martini", "Martini", ["gin", "dryVermouth"]);
-
+    drink!(
+        "alexander",
+        "Alexander",
+        ["cognac", "cremeDeCacao", "cream"]
+    );
+    drink!(
+        "americano",
+        "Americano",
+        ["campari", "sweetVermouth", "sodaWater"]
+    );
+    drink!(
+        "angelFace",
+        "Angel Face",
+        ["gin", "apricotBrandy", "calvados"]
+    );
     drink!(
         "aviation",
         "Aviation",
-        ["gin", "maraschinoLiquer", "lemonJuice"]
+        ["gin", "lemonJuice", "maraschino"]
     );
-
+    drink!(
+        "bacardi",
+        "Bacardi",
+        ["whiteRum", "limeJuice", "grenadine"]
+    );
+    drink!(
+        "betweenTheSheets",
+        "Between The Sheets",
+        ["whiteRum", "cognac", "tripleSec", "lemonJuice"]
+    );
+    drink!(
+        "casino",
+        "Casino",
+        ["gin", "maraschino", "orangeBitters", "lemonJuice"]
+    );
+    drink!(
+        "cloverClub",
+        "Clover Club",
+        ["gin", "lemonJuice", "raspberrySyrup", "eggWhite"]
+    );
+    drink!(
+        "daiquiri",
+        "Daiquiri",
+        ["whiteRum", "limeJuice", "simpleSyrup"]
+    );
+    drink!(
+        "derby",
+        "Derby",
+        ["gin", "peachBitters", "mintLeaves"]
+    );
+    drink!(
+        "martini",
+        "Martini",
+        ["gin", "dryVermouth"]
+    );
+    drink!(
+        "ginFizz",
+        "Gin Fizz",
+        ["gin", "lemonJuice", "gommeSyrup", "sodaWater"]
+    );
+    drink!(
+        "johnCollins",
+        "John Collins",
+        ["gin", "lemonJuice", "sodaWater"]
+    );
+    drink!(
+        "manhattan",
+        "Manhattan",
+        ["rye", "sweetVermouth", "angosturaBitters"]
+    );
+    drink!(
+        "maryPickford",
+        "Mary Pickford",
+        ["whiteRum", "pineappleJuice", "grenadine", "maraschino"]
+    );
+    drink!(
+        "monkeyGland",
+        "Monkey Gland",
+        ["gin", "orangeJuice", "absinthe", "grenadine"]
+    );
+    drink!(
+        "negroni",
+        "Negroni",
+        ["gin", "sweetVermouth", "campari"]
+    );
     drink!(
         "oldFashioned",
         "Old Fashioned",
-        ["bourbon", "angosturaBitters"]
+        ["bourbon", "angosturaBitters", "sugarCube"]
+    );
+    drink!(
+        "paradise",
+        "Paradise",
+        ["gin", "apricotBrandy", "orangeJuice"]
+    );
+    drink!(
+        "plantersPunch",
+        "Planter's Punch",
+        [
+            "rum",
+            "orangeJuice",
+            "pineappleJuice",
+            "lemonJuice",
+            "grenadine",
+            "simpleSyrup",
+            "angosturaBitters"
+        ]
+    );
+    drink!(
+        "portoFlip",
+        "Porto Flip",
+        ["brandy", "port", "eggYolk"]
+    );
+    drink!(
+        "ramosGinFizz",
+        "Ramos Gin Fizz",
+        [
+            "gin",
+            "limeJuice",
+            "lemonJuice",
+            "simpleSyrup",
+            "cream",
+            "eggWhite",
+            "orangeFlowerWater",
+            "vanillaExtract",
+            "sodaWater"
+        ]
+    );
+    drink!(
+        "rustyNail",
+        "Rusty Nail",
+        ["scotch", "drambuie"]
+    );
+    drink!(
+        "sazerac",
+        "Sazerac",
+        ["cognac", "absinthe", "sugarCube", "peychaudsBitters"]
+    );
+    drink!(
+        "screwdriver",
+        "Screwdriver",
+        ["vodka", "orangeJuice"]
+    );
+    drink!(
+        "sidecar",
+        "Sidecar",
+        ["cognac", "tripleSec", "lemonJuice"]
+    );
+    drink!(
+        "stinger",
+        "Stinger",
+        ["cognac", "cremeDeMenthe"]
+    );
+    drink!(
+        "tuxedo",
+        "Tuxedo",
+        ["gin", "dryVermouth", "maraschino", "absinthe", "orangeBitters"]
+    );
+    drink!(
+        "whiskeySour",
+        "Whiskey Sour",
+        ["bourbon", "lemonJuice", "gommeSyrup", "eggWhite"]
+    );
+    drink!(
+        "whiteLady",
+        "White Lady",
+        ["gin", "tripleSec", "lemonJuice"]
     );
 
     Drinks {
