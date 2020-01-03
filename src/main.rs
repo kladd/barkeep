@@ -92,6 +92,7 @@ fn build_ingredients() -> HashMap<String, Ingredient> {
     ingredient!("port", "Port");
     ingredient!("raspberrySyrup", "Raspberry Syrup");
     ingredient!("rye", "Rye");
+    ingredient!("rum", "Rum");
     ingredient!("simpleSyrup", "Simple Syrup");
     ingredient!("sodaWater", "Soda Water");
     ingredient!("sugarCube", "Sugar Cube");
@@ -280,9 +281,7 @@ fn build_drinks() -> Drinks {
         "Whiskey Sour",
         ["bourbon", "lemonJuice", "gommeSyrup", "eggWhite"]
     );
-    drink!(
-        "whiteLady",
-        "White Lady",
+    drink!( "whiteLady", "White Lady",
         ["gin", "tripleSec", "lemonJuice"]
     );
 
@@ -335,6 +334,6 @@ fn main() -> std::io::Result<()> {
             .register_data(data.clone())
             .default_service(web::route().to(|| HttpResponse::NotFound()))
     })
-    .bind("127.0.0.1:8080")?
+    .bind("0.0.0.0:8086")?
     .run()
 }
