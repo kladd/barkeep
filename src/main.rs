@@ -175,7 +175,7 @@ fn build_drinks() -> Drinks {
     );
     drink!(
         "betweenTheSheets",
-        "Between The Sheets",
+        "Between the Sheets",
         [
             ("whiteRum", "3 cl"),
             ("cognac", "3 cl"),
