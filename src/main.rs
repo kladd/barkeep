@@ -26,13 +26,16 @@ struct BarkeepRequest {
 struct DrinkResponse {
     id: String,
     display_name: String,
-    missing: HashSet<Ingredient>,
+    recipe: HashMap<String, String>,
+    missing: HashSet<String>,
+    ingredients: HashMap<String, Ingredient>,
 }
 
 struct Drinks {
     ids: Vec<String>,
     display_names: Vec<String>,
     ingredient_ids: Vec<HashSet<String>>,
+    recipes: Vec<HashMap<String, String>>,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Eq, Hash, Clone)]
@@ -100,6 +103,7 @@ fn build_ingredients() -> HashMap<String, Ingredient> {
     ingredient!("tripleSec", "Triple Sec");
     ingredient!("vanillaExtract", "Vanilla Extract");
     ingredient!("vodka", "Vodka");
+    ingredient!("water", "Water");
     ingredient!("whiteRum", "White Rum");
 
     ingredients
@@ -109,186 +113,303 @@ fn build_drinks() -> Drinks {
     let mut ids: Vec<String> = vec![];
     let mut display_names: Vec<String> = vec![];
     let mut drink_ingredients: Vec<HashSet<String>> = vec![];
+    let mut drink_recipes: Vec<HashMap<String, String>> = vec![];
 
     macro_rules! drink {
         ($id:expr, $dn:expr, [$($ingvec:expr),*]) => {
             ids.push(String::from($id));
             display_names.push(String::from($dn));
-            drink_ingredients.push(HashSet::from_iter(vec![$(String::from($ingvec)),*]));
+            drink_ingredients.push(HashSet::from_iter(vec![$(String::from($ingvec.0)),*]));
+            let mut recipe = HashMap::new();
+            $(
+                recipe.insert(String::from($ingvec.0), String::from($ingvec.1));
+            )*
+            drink_recipes.push(recipe);
         };
     }
 
     drink!(
         "alexander",
         "Alexander",
-        ["cognac", "cremeDeCacao", "cream"]
+        [
+            ("cognac", "3 cl"),
+            ("cremeDeCacao", "3 cl"),
+            ("cream", "3 cl")
+        ]
     );
     drink!(
         "americano",
         "Americano",
-        ["campari", "sweetVermouth", "sodaWater"]
+        [
+            ("campari", "3 cl"),
+            ("sweetVermouth", "3 cl"),
+            ("sodaWater", "splash")
+        ]
     );
     drink!(
         "angelFace",
         "Angel Face",
-        ["gin", "apricotBrandy", "calvados"]
+        [
+            ("gin", "3 cl"),
+            ("apricotBrandy", "3 cl"),
+            ("calvados", "3 cl")
+        ]
     );
     drink!(
         "aviation",
         "Aviation",
-        ["gin", "lemonJuice", "maraschino"]
+        [
+            ("gin", "4.5 cl"),
+            ("lemonJuice", "1.5 cl"),
+            ("maraschino", "1.5 cl")
+        ]
     );
     drink!(
         "bacardi",
         "Bacardi",
-        ["whiteRum", "limeJuice", "grenadine"]
+        [
+            ("whiteRum", "4.5 cl"),
+            ("limeJuice", "2 cl"),
+            ("grenadine", "1 cl")
+        ]
     );
     drink!(
         "betweenTheSheets",
         "Between The Sheets",
-        ["whiteRum", "cognac", "tripleSec", "lemonJuice"]
+        [
+            ("whiteRum", "3 cl"),
+            ("cognac", "3 cl"),
+            ("tripleSec", "3 cl"),
+            ("lemonJuice", "2 cl")
+        ]
     );
     drink!(
         "casino",
         "Casino",
-        ["gin", "maraschino", "orangeBitters", "lemonJuice"]
+        [
+            ("gin", "4 cl"),
+            ("maraschino", "1 cl"),
+            ("orangeBitters", "1 cl"),
+            ("lemonJuice", "1 cl")
+        ]
     );
     drink!(
         "cloverClub",
         "Clover Club",
-        ["gin", "lemonJuice", "raspberrySyrup", "eggWhite"]
+        [
+            ("gin", "4.5 cl"),
+            ("lemonJuice", "1.5 cl"),
+            ("raspberrySyrup", "1.5 cl"),
+            ("eggWhite", "1 cl")
+        ]
     );
     drink!(
         "daiquiri",
         "Daiquiri",
-        ["whiteRum", "limeJuice", "simpleSyrup"]
+        [
+            ("whiteRum", "4.5 cl"),
+            ("limeJuice", "2.5 cl"),
+            ("simpleSyrup", "1.5 cl")
+        ]
     );
     drink!(
         "derby",
         "Derby",
-        ["gin", "peachBitters", "mintLeaves"]
+        [
+            ("gin", "6 cl"),
+            ("peachBitters", "2 cl"),
+            ("mintLeaves", "2 cl")
+        ]
     );
     drink!(
         "martini",
         "Martini",
-        ["gin", "dryVermouth"]
+        [("gin", "6 cl"), ("dryVermouth", "1 cl")]
     );
     drink!(
         "ginFizz",
         "Gin Fizz",
-        ["gin", "lemonJuice", "gommeSyrup", "sodaWater"]
+        [
+            ("gin", "4.5 cl"),
+            ("lemonJuice", "3 cl"),
+            ("gommeSyrup", "1 cl"),
+            ("sodaWater", "8 cl")
+        ]
     );
     drink!(
         "johnCollins",
         "John Collins",
-        ["gin", "lemonJuice", "sodaWater"]
+        [
+            ("gin", "4.5 cl"),
+            ("lemonJuice", "3 cl"),
+            ("simpleSyrup", "1.5 cl"),
+            ("sodaWater", "6 cl")
+        ]
     );
     drink!(
         "manhattan",
         "Manhattan",
-        ["rye", "sweetVermouth", "angosturaBitters"]
+        [
+            ("rye", "5 cl"),
+            ("sweetVermouth", "2 cl"),
+            ("angosturaBitters", "1 dash")
+        ]
     );
     drink!(
         "maryPickford",
         "Mary Pickford",
-        ["whiteRum", "pineappleJuice", "grenadine", "maraschino"]
+        [
+            ("whiteRum", "6 cl"),
+            ("pineappleJuice", "6 cl"),
+            ("grenadine", "1 cl"),
+            ("maraschino", "1 cl")
+        ]
     );
     drink!(
         "monkeyGland",
         "Monkey Gland",
-        ["gin", "orangeJuice", "absinthe", "grenadine"]
+        [
+            ("gin", "5 cl"),
+            ("orangeJuice", "3 cl"),
+            ("absinthe", "2 cl"),
+            ("grenadine", "2 cl")
+        ]
     );
     drink!(
         "negroni",
         "Negroni",
-        ["gin", "sweetVermouth", "campari"]
+        [
+            ("gin", "3 cl"),
+            ("sweetVermouth", "3 cl"),
+            ("campari", "3 cl")
+        ]
     );
     drink!(
         "oldFashioned",
         "Old Fashioned",
-        ["bourbon", "angosturaBitters", "sugarCube"]
+        [
+            ("bourbon", "4.5 cl"),
+            ("angosturaBitters", "2 dashes"),
+            ("sugarCube", "1"),
+            ("water", "few dashes")
+        ]
     );
     drink!(
         "paradise",
         "Paradise",
-        ["gin", "apricotBrandy", "orangeJuice"]
+        [
+            ("gin", "3.5 cl"),
+            ("apricotBrandy", "2 cl"),
+            ("orangeJuice", "1.5 cl")
+        ]
     );
     drink!(
         "plantersPunch",
         "Planter's Punch",
         [
-            "rum",
-            "orangeJuice",
-            "pineappleJuice",
-            "lemonJuice",
-            "grenadine",
-            "simpleSyrup",
-            "angosturaBitters"
+            ("rum", "4.5 cl"),
+            ("orangeJuice", "3.5 cl"),
+            ("pineappleJuice", "3.5 cl"),
+            ("lemonJuice", "2 cl"),
+            ("grenadine", "1 cl"),
+            ("simpleSyrup", "1 cl"),
+            ("angosturaBitters", "few dashes")
         ]
     );
     drink!(
         "portoFlip",
         "Porto Flip",
-        ["brandy", "port", "eggYolk"]
+        [
+            ("brandy", "1.5 cl"),
+            ("port", "4.5 cl"),
+            ("eggYolk", "1 cl")
+        ]
     );
     drink!(
         "ramosGinFizz",
         "Ramos Gin Fizz",
         [
-            "gin",
-            "limeJuice",
-            "lemonJuice",
-            "simpleSyrup",
-            "cream",
-            "eggWhite",
-            "orangeFlowerWater",
-            "vanillaExtract",
-            "sodaWater"
+            ("gin", "4.5 cl"),
+            ("limeJuice", "1.5 cl"),
+            ("lemonJuice", "1.5 cl"),
+            ("simpleSyrup", "3 cl"),
+            ("cream", "6 cl"),
+            ("eggWhite", "1"),
+            ("orangeFlowerWater", "3 dashes"),
+            ("vanillaExtract", "2 drops"),
+            ("sodaWater", "top")
         ]
     );
     drink!(
         "rustyNail",
         "Rusty Nail",
-        ["scotch", "drambuie"]
+        [("scotch", "4.5 cl"), ("drambuie", "2.5 cl")]
     );
     drink!(
         "sazerac",
         "Sazerac",
-        ["cognac", "absinthe", "sugarCube", "peychaudsBitters"]
+        [
+            ("cognac", "5 cl"),
+            ("absinthe", "1 cl"),
+            ("sugarCube", "1"),
+            ("peychaudsBitters", "2 dashes")
+        ]
     );
     drink!(
         "screwdriver",
         "Screwdriver",
-        ["vodka", "orangeJuice"]
+        [("vodka", "5 cl"), ("orangeJuice", "10 cl")]
     );
     drink!(
         "sidecar",
         "Sidecar",
-        ["cognac", "tripleSec", "lemonJuice"]
+        [
+            ("cognac", "5 cl"),
+            ("tripleSec", "2 cl"),
+            ("lemonJuice", "2 cl")
+        ]
     );
     drink!(
         "stinger",
         "Stinger",
-        ["cognac", "cremeDeMenthe"]
+        [("cognac", "5 cl"), ("cremeDeMenthe", "2 cl")]
     );
     drink!(
         "tuxedo",
         "Tuxedo",
-        ["gin", "dryVermouth", "maraschino", "absinthe", "orangeBitters"]
+        [
+            ("gin", "3 cl"),
+            ("dryVermouth", "3 cl"),
+            ("maraschino", "0.5 barspoon"),
+            ("absinthe", "0.25 barspoon"),
+            ("orangeBitters", "3 dashes")
+        ]
     );
     drink!(
         "whiskeySour",
         "Whiskey Sour",
-        ["bourbon", "lemonJuice", "gommeSyrup", "eggWhite"]
+        [
+            ("bourbon", "4.5 cl"),
+            ("lemonJuice", "3 cl"),
+            ("gommeSyrup", "1.5 cl"),
+            ("eggWhite", "1 dash")
+        ]
     );
-    drink!( "whiteLady", "White Lady",
-        ["gin", "tripleSec", "lemonJuice"]
+    drink!(
+        "whiteLady",
+        "White Lady",
+        [
+            ("gin", "4 cl"),
+            ("tripleSec", "3 cl"),
+            ("lemonJuice", "2 cl")
+        ]
     );
 
     Drinks {
         ids: ids,
         display_names: display_names,
         ingredient_ids: drink_ingredients,
+        recipes: drink_recipes,
     }
 }
 
@@ -303,16 +424,24 @@ fn index(
             continue;
         }
 
-        let missing_ingredients: Vec<Ingredient> = ingredients
+        let missing_ingredients = ingredients
             .difference(&req.ingredients)
             .cloned()
             .map(|id| ctx.ingredients.get(&id).unwrap().to_owned())
-            .collect::<Vec<Ingredient>>();
+            .map(|ingredient| ingredient.id)
+            .collect::<Vec<String>>();
+
+        let mut display_map: HashMap<String, Ingredient> = HashMap::new();
+        for ing in ingredients {
+            display_map.insert(ing.to_owned(), ctx.ingredients.get(ing).unwrap().to_owned());
+        }
 
         drinks.push(DrinkResponse {
             id: ctx.drinks.ids[i].to_owned(),
             display_name: ctx.drinks.display_names[i].to_owned(),
             missing: HashSet::from_iter(missing_ingredients.into_iter()),
+            recipe: ctx.drinks.recipes[i].to_owned(),
+            ingredients: display_map,
         });
     }
 
