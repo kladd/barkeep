@@ -67,11 +67,17 @@ fn build_ingredients() -> HashMap<String, Ingredient> {
     ingredient!("absinthe", "Absinthe");
     ingredient!("angosturaBitters", "Angostura Bitters");
     ingredient!("apricotBrandy", "Apricot Brandy");
+    ingredient!("blackPepper", "Black Pepper");
     ingredient!("bourbon", "Bourbon");
     ingredient!("brandy", "Brandy");
+    ingredient!("cachaca", "Cachaça");
     ingredient!("calvados", "Calvados");
     ingredient!("campari", "Campari");
+    ingredient!("celerySalt", "Celery Salt");
+    ingredient!("champagne", "Champagne");
+    ingredient!("coffeeLiqueur", "Coffee Liqueur");
     ingredient!("cognac", "Cognac");
+    ingredient!("cranberryJuice", "Cranberry Juice");
     ingredient!("cream", "Cream");
     ingredient!("cremeDeCacao", "Crème de Cacao");
     ingredient!("cremeDeMenthe", "Crème de Menthe");
@@ -83,6 +89,7 @@ fn build_ingredients() -> HashMap<String, Ingredient> {
     ingredient!("gommeSyrup", "Gomme Syrup");
     ingredient!("grenadine", "Grenadine");
     ingredient!("lemonJuice", "Lemon Juice");
+    ingredient!("lime", "Lime");
     ingredient!("limeJuice", "Lime Juice");
     ingredient!("maraschino", "Maraschino Liqueur");
     ingredient!("mintLeaves", "Mint Leaves");
@@ -90,21 +97,28 @@ fn build_ingredients() -> HashMap<String, Ingredient> {
     ingredient!("orangeFlowerWater", "Orange Flower Water");
     ingredient!("orangeJuice", "Orange Juice");
     ingredient!("peachBitters", "Peach Bitters");
+    ingredient!("peachPuree", "Peach Purée");
     ingredient!("peychaudsBitters", "Peychaud's Bitters");
     ingredient!("pineappleJuice", "Pineapple Juice");
     ingredient!("port", "Port");
+    ingredient!("prosecco", "Prosecco");
     ingredient!("raspberrySyrup", "Raspberry Syrup");
-    ingredient!("rye", "Rye");
     ingredient!("rum", "Rum");
+    ingredient!("rye", "Rye");
     ingredient!("simpleSyrup", "Simple Syrup");
     ingredient!("sodaWater", "Soda Water");
+    ingredient!("sugar", "Sugar");
     ingredient!("sugarCube", "Sugar Cube");
     ingredient!("sweetVermouth", "Sweet Vermouth");
+    ingredient!("tabascoSauce", "Tabasco Sauce");
+    ingredient!("tomatoJuice", "Tomato Juice");
     ingredient!("tripleSec", "Triple Sec");
     ingredient!("vanillaExtract", "Vanilla Extract");
     ingredient!("vodka", "Vodka");
     ingredient!("water", "Water");
     ingredient!("whiteRum", "White Rum");
+    ingredient!("worcestershireSauce", "Worcestershire Sauce");
+    ingredient!("cola", "Cola");
 
     ingredients
 }
@@ -404,6 +418,67 @@ fn build_drinks() -> Drinks {
             ("lemonJuice", "2 cl")
         ]
     );
+    drink!(
+        "bellini",
+        "Bellini",
+        [("prosecco", "10 cl"), ("peachPuree", "5 cl")]
+    );
+    drink!(
+        "blackRussian",
+        "Black Russian",
+        [("vodka", "5 cl"), ("coffeeLiqueur", "2 cl")]
+    );
+    drink!(
+        "bloodyMary",
+        "Bloody Mary",
+        [
+            ("vodka", "4.5 cl"),
+            ("tomatoJuice", "9 cl"),
+            ("lemonJuice", "1.5 cl"),
+            ("worscestershireSauce", "1 layer"),
+            ("tabascoSauce", "as desired"),
+            ("celerySalt", "4 dashes"),
+            ("blackPepper", "2 dashes")
+        ]
+    );
+    drink!(
+        "caipirinha",
+        "Caipirinha",
+        [
+            ("cachaca", "5 cl"),
+            ("lime", "4 wedges"),
+            ("sugar", "2 teaspoonful")
+        ]
+    );
+    drink!(
+        "champagneCocktail",
+        "Champagne Cocktail",
+        [
+            ("champagne", "9 cl"),
+            ("cognac", "1 cl"),
+            ("angosturaBitters", "2 dashes"),
+            ("sugarCube", "1")
+        ]
+    );
+    drink!(
+        "cosmopolitan",
+        "Cosmopolitan",
+        [
+            ("vodka", "4 cl"),
+            ("tripleSec", "1.5 cl"),
+            ("limeJuice", "1.5 cl"),
+            ("cranberryJuice", "3 cl")
+        ]
+    );
+    drink!(
+        "cubaLibre",
+        "Cuba Libre",
+        [
+            ("cola", "12 cl"),
+            ("whiteRum", "5 cl"),
+            ("limeJuice", "1 cl")
+        ]
+    );
 
     Drinks {
         ids: ids,
@@ -459,7 +534,6 @@ fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .service(web::resource("/v1").route(web::post().to(index)))
-            .service(Files::new("", "./public").index_file("index.html"))
             .register_data(data.clone())
             .default_service(web::route().to(|| HttpResponse::NotFound()))
     })
