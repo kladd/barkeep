@@ -435,7 +435,7 @@ fn build_drinks() -> Drinks {
             ("vodka", "4.5 cl"),
             ("tomatoJuice", "9 cl"),
             ("lemonJuice", "1.5 cl"),
-            ("worscestershireSauce", "1 layer"),
+            ("worcestershireSauce", "1 layer"),
             ("tabascoSauce", "as desired"),
             ("celerySalt", "4 dashes"),
             ("blackPepper", "2 dashes")
