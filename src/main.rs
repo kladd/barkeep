@@ -105,6 +105,7 @@ fn build_ingredients() -> HashMap<String, Ingredient> {
     ingredient!("raspberrySyrup", "Raspberry Syrup");
     ingredient!("rum", "Rum");
     ingredient!("rye", "Rye");
+    ingredient!("scotch", "Scotch");
     ingredient!("simpleSyrup", "Simple Syrup");
     ingredient!("sodaWater", "Soda Water");
     ingredient!("sugar", "Sugar");
