@@ -81,6 +81,7 @@ fn build_ingredients() -> HashMap<String, Ingredient> {
     ingredient!("cream", "Cream");
     ingredient!("cremeDeCacao", "Crème de Cacao");
     ingredient!("cremeDeMenthe", "Crème de Menthe");
+    ingredient!("cremeDeViolette", "Crème de Violette");
     ingredient!("drambuie", "Drambuie");
     ingredient!("dryVermouth", "Dry Vermouth");
     ingredient!("eggWhite", "Egg White");
@@ -176,7 +177,8 @@ fn build_drinks() -> Drinks {
         [
             ("gin", "4.5 cl"),
             ("lemonJuice", "1.5 cl"),
-            ("maraschino", "1.5 cl")
+            ("maraschino", "1.5 cl"),
+            ("cremeDeViolette", "1 barspoon")
         ]
     );
     drink!(
